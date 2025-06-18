@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+export const POLL_INTERVAL_MS = 30_000; // 30 seconds – tweak via env in future
+
 interface Job {
   upload_id: string;
   filename: string;
@@ -13,6 +15,7 @@ const UploadStatusPage: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isPolling, setIsPolling] = useState(false);
 
   const fetchJobs = async () => {
     setLoading(true);
@@ -26,18 +29,26 @@ const UploadStatusPage: React.FC = () => {
       setError('Failed to load jobs');
     } finally {
       setLoading(false);
+      setIsPolling(false);
     }
   };
 
   useEffect(() => {
     fetchJobs();
+
+    const id = setInterval(() => {
+      setIsPolling(true);
+      fetchJobs();
+    }, POLL_INTERVAL_MS);
+
+    return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div style={{ padding: 32 }}>
       <h1>My Uploads</h1>
-      <button onClick={fetchJobs} disabled={loading}>
+      <button onClick={fetchJobs} disabled={loading || isPolling}>
         Refresh
       </button>
       {loading && <p>Loading...</p>}
