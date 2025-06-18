@@ -1,1 +1,106 @@
- 
+# Frontend Application
+
+This is the frontend application for the Aumne Code Processor, built with React and Vite. It provides a user interface for interacting with the backend API, specifically for uploading project files.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+  - [Running Tests](#running-tests)
+- [Available Scripts](#available-scripts)
+- [Upload Status Page](#upload-status-page)
+
+## Introduction
+
+This frontend application is a Single Page Application (SPA) developed using React and Vite. Its primary function is to allow users to upload `.zip` project files to the `aumne_code_processor` backend.
+
+## Project Structure
+
+- `public/`: Static assets.
+- `src/`: Contains the main application source code.
+  - `src/main.tsx`: The entry point of the React application.
+  - `src/App.tsx`: The main application component.
+  - `src/router.tsx`: Defines the application's routing.
+  - `src/context/`: React Context APIs (e.g., `AuthContext.tsx`).
+  - `src/components/`: Reusable React components (e.g., `UploadForm.tsx`).
+  - `src/pages/`: Page-level components (e.g., `UploadPage.tsx`).
+  - `src/__tests__/`: Unit and integration tests (e.g., `UploadForm.test.tsx`).
+  - `src/setupTests.ts`: Vitest setup file for Jest-DOM matchers.
+- `index.html`: The main HTML file served by Vite.
+- `vite.config.ts`: Vite build configuration.
+- `vitest.config.ts`: Vitest testing framework configuration.
+- `tsconfig.json`: TypeScript configuration.
+- `package.json`: Project dependencies and scripts.
+
+## Getting Started
+
+Follow these instructions to set up and run the frontend application on your local machine.
+
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm (Node Package Manager)
+
+### Installation
+
+1.  Navigate to the `frontend` directory in your terminal:
+
+    ```bash
+    cd frontend
+    ```
+
+2.  Install the project dependencies:
+
+    ```bash
+    npm install
+    ```
+
+### Running the Application
+
+To start the development server:
+
+```bash
+npm run dev
+```
+
+The application will typically run on `http://localhost:3001`. You can then access the upload page directly at `http://localhost:3001/upload`. The root path `/` also redirects to `/upload`.
+
+### Running Tests
+
+To run the unit and integration tests:
+
+```bash
+npm test
+```
+
+## Available Scripts
+
+In the project directory, you can run:
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the application for production to the `dist` folder.
+- `npm run lint`: Runs ESLint to check for code style issues.
+- `npm preview`: Serves the `dist` folder locally for preview.
+- `npm test`: Runs the test suite with Vitest.
+
+## Upload Status Page
+
+Navigate to `/uploads` to view a table of your uploaded projects and their processing status.
+
+Features:
+* Auto-fetch on load and manual **Refresh** button.
+* Shows ID, filename, status badge, created / updated timestamps.
+* Graceful loading state (spinner text) and error banner.
+
+The page issues a `GET /uploads` request to the backend including the bearer token from the `AuthContext` (for now the stub token `Bearer faketoken`).  The backend responds with the structure documented in the backend README.
+
+Unit-tests live in `src/__tests__/UploadStatusPage.test.tsx` and cover:
+
+1. Rendering of jobs returned from the API
+2. Manual refresh triggering a second network call and UI update
+
+Run them via `npm test` (Vitest). 
