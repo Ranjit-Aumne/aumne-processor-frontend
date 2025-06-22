@@ -1,6 +1,6 @@
 # Frontend Application
 
-This is the frontend application for the Aumne Code Processor, built with React and Vite. It provides a user interface for interacting with the backend API, specifically for uploading project files.
+This is the frontend application for the Aumne Code Processor, built with React and Vite. It provides a user interface for interacting with the backend API, specifically for project management, uploading project files, and monitoring processing status.
 
 ## Table of Contents
 
@@ -12,11 +12,16 @@ This is the frontend application for the Aumne Code Processor, built with React 
   - [Running the Application](#running-the-application)
   - [Running Tests](#running-tests)
 - [Available Scripts](#available-scripts)
+- [Project Management](#project-management)
 - [Upload Status Page](#upload-status-page)
 
 ## Introduction
 
-This frontend application is a Single Page Application (SPA) developed using React and Vite. Its primary function is to allow users to upload `.zip` project files to the `aumne_code_processor` backend.
+This frontend application is a Single Page Application (SPA) developed using React and Vite. Its primary functions include:
+
+- Managing project configurations and database settings
+- Uploading `.zip` project files to the `aumne_code_processor` backend  
+- Monitoring processing status and job queues
 
 ## Project Structure
 
@@ -67,7 +72,14 @@ To start the development server:
 npm run dev
 ```
 
-The application will typically run on `http://localhost:3001`. You can then access the upload page directly at `http://localhost:3001/upload`. The root path `/` also redirects to `/upload`.
+The application will typically run on `http://localhost:3001`. Key routes include:
+
+- `http://localhost:3001/` - Redirects to projects dashboard
+- `http://localhost:3001/projects` - Projects dashboard  
+- `http://localhost:3001/projects/manage` - Project management interface
+- `http://localhost:3001/new-project` - Create new project
+- `http://localhost:3001/upload` - File upload page
+- `http://localhost:3001/uploads` - Upload status monitoring
 
 ### Running Tests
 
@@ -86,6 +98,55 @@ In the project directory, you can run:
 - `npm run lint`: Runs ESLint to check for code style issues.
 - `npm preview`: Serves the `dist` folder locally for preview.
 - `npm test`: Runs the test suite with Vitest.
+
+## Project Management
+
+The application includes comprehensive project management functionality accessible through multiple routes:
+
+### Routes
+
+- `/projects` - Main projects dashboard showing project cards and quick access
+- `/projects/manage` - Advanced project management page with table view and CRUD operations
+- `/new-project` - Create new project form
+
+### Project Management Page (`/projects/manage`)
+
+Navigate to `/projects/manage` to access the full project management interface with:
+
+**Features:**
+* **Table View**: Projects displayed in a structured table with columns for Key, Name, DB Config, and Actions
+* **Create Projects**: Modal form for creating new projects with name and JSON database configuration
+* **Edit Projects**: Inline editing of existing project configurations
+* **Delete Projects**: Confirmation-based project deletion with double-click protection
+* **Real-time Validation**: Form validation for required fields and JSON format
+* **Toast Notifications**: Success and error messages for all operations
+* **Loading States**: Proper loading indicators and empty state messaging
+
+**API Integration:**
+* `GET /api/v1/projects` - Retrieve all projects
+* `POST /api/v1/projects` - Create new project
+* `PUT /api/v1/projects/{key}` - Update existing project
+* `DELETE /api/v1/projects/{key}` - Delete project
+
+**Database Configuration:**
+Projects require a JSON configuration object containing:
+```json
+{
+  "uri": "neo4j://localhost:7687",
+  "index": "your-index-name"
+}
+```
+
+**Testing:**
+Comprehensive BDD-style tests cover all scenarios:
+* Project listing and display
+* Create, update, and delete operations
+* Error handling and validation
+* Toast notifications and user feedback
+
+Tests are located in `src/__tests__/ProjectManagementPage.test.tsx` and `src/__tests__/features/project_management.feature`.
+
+Run tests via `npm test`.
 
 ## Upload Status Page
 

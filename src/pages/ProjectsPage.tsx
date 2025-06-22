@@ -79,23 +79,42 @@ const ProjectsPage: React.FC = () => {
           </p>
         </div>
         
-        <Link
-          to="/new-project"
-          style={{
-            padding: '1rem 2rem',
-            backgroundColor: '#007bff',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '6px',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
-          }}
-        >
-          <span>➕</span>
-          New Project
-        </Link>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <Link
+            to="/projects/manage"
+            style={{
+              padding: '1rem 2rem',
+              backgroundColor: '#28a745',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '6px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+          >
+            <span>⚙️</span>
+            Manage Projects
+          </Link>
+          <Link
+            to="/new-project"
+            style={{
+              padding: '1rem 2rem',
+              backgroundColor: '#007bff',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '6px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+          >
+            <span>➕</span>
+            New Project
+          </Link>
+        </div>
       </div>
 
       {/* Error Message */}

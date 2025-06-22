@@ -2,6 +2,7 @@ import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import ProjectsPage from './pages/ProjectsPage';
+import ProjectManagementPage from './pages/ProjectManagementPage';
 import NewProjectPage from './pages/NewProjectPage';
 import DataProcessingPage from './pages/DataProcessingPage';
 import UploadPage from './pages/UploadPage';
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
   {
     path: '/projects',
     element: <Layout><ProjectsPage /></Layout>,
+  },
+  {
+    path: '/projects/manage',
+    element: <Layout><ProjectManagementPage /></Layout>,
   },
   {
     path: '/new-project',
